@@ -48,9 +48,9 @@ int main(int argc, char *argv[])
 
   game_t game ={
     .board = {
-      PLAYER_X_CELL, EMPTY_CELL, PLAYER_O_CELL,
-      EMPTY_CELL, PLAYER_X_CELL, PLAYER_O_CELL,
-      EMPTY_CELL, EMPTY_CELL, PLAYER_X_CELL
+      EMPTY_CELL, EMPTY_CELL, EMPTY_CELL,
+      EMPTY_CELL, EMPTY_CELL, EMPTY_CELL,
+      EMPTY_CELL, EMPTY_CELL, EMPTY_CELL
     },
     .player = PLAYER_X,
     .state = TIE_STATE,

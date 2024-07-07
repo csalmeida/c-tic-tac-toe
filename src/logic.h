@@ -75,7 +75,7 @@ int check_player_won(game_t *game, enum Player player) {
  */
 int count_cells(const enum Cell *board, enum Cell cell_state) {
   int count = 0;
-  int total_cells = BOARD_ROWS * BOARD_COLS;
+  size_t total_cells = BOARD_ROWS * BOARD_COLS;
 
   // Iterates through the board and adds cells that match the state to the count.
   for (size_t cell_num = 0; cell_num < total_cells; cell_num++)
