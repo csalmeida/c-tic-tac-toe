@@ -35,9 +35,13 @@ run: clean all
 $(BIN)/$(EXECUTABLE): $(SRC)/$(FILE_NAME).c
 	$(CC) $(C_FLAGS) $^ -o $@ -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
 
+mac-arm64: $(SRC)/$(FILE_NAME).c
+	$(CC) $(C_FLAGS) $^ -target arm64-apple-macos11 -o $@_mac_arm64 -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
+
 # Removes main and main.* folders, keeps sdl2-config:
 clean:
 	- rm -f ./bin/$(EXECUTABLE)
+	- rm -f ./bin/$(EXECUTABLE)_
 	- rm -rf ./bin/$(EXECUTABLE).*
 
 # The final command should look like: 
