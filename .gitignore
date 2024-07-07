@@ -7,3 +7,7 @@ bin/*
 
 # Keep SDL binary:
 !bin/sdl2-config
+
+# Target files:
+mac-arm64_mac_arm64
+/mac-arm64_mac_arm64.dSYM
