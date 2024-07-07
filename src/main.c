@@ -48,12 +48,12 @@ int main(int argc, char *argv[])
 
   game_t game ={
     .board = {
-      EMPTY, EMPTY, EMPTY,
-      EMPTY, EMPTY, EMPTY,
-      EMPTY, EMPTY, EMPTY
+      PLAYER_X_CELL, EMPTY_CELL, PLAYER_O_CELL,
+      EMPTY_CELL, PLAYER_X_CELL, PLAYER_O_CELL,
+      EMPTY_CELL, EMPTY_CELL, PLAYER_X_CELL
     },
     .player = PLAYER_X,
-    .state = IN_PLAY_STATE,
+    .state = TIE_STATE,
   };
 
   // https://wiki.libsdl.org/SDL2/SDL_Event
@@ -88,6 +88,5 @@ int main(int argc, char *argv[])
   SDL_DestroyWindow(window);
   SDL_Quit();
 
-  printf("SDL2: Done! 🎉\n");
   return EXIT_SUCCESS;
 }

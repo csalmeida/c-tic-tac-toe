@@ -13,11 +13,16 @@
 #define CELL_WIDTH (SCREEN_WIDTH / BOARD_ROWS)
 #define CELL_HEIGHT (SCREEN_HEIGHT / BOARD_COLS)
 
-// This could be an enum.
 enum Cell {
-    EMPTY = 0,
-    PLAYER_X = 1,
-    PLAYER_O = 2
+    EMPTY_CELL = 0,
+    PLAYER_X_CELL = 1,
+    PLAYER_O_CELL = 2
+};
+
+// Similar to Cell except it cannot be empty.
+enum Player {
+  PLAYER_X = PLAYER_X_CELL,
+  PLAYER_O = PLAYER_O_CELL,
 };
 
 enum GameState {
@@ -30,7 +35,7 @@ enum GameState {
 
 typedef struct {
   enum Cell board[BOARD_ROWS * BOARD_COLS];
-  int player;
+  enum Player player;
   enum GameState state;
 } game_t;
 

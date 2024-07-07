@@ -129,10 +129,10 @@ void render_board(SDL_Renderer *renderer, const enum Cell *board, const SDL_Colo
       int current_square = board[row_num * BOARD_ROWS + column_num];
       switch (current_square)
       {
-      case PLAYER_X:
+      case PLAYER_X_CELL:
         render_x(renderer, row_num, column_num, player_x_color);
         break;
-      case PLAYER_O:
+      case PLAYER_O_CELL:
         render_o(renderer, row_num, column_num, player_o_color);
         break;
       default:
