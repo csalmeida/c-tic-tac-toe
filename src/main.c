@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
       EMPTY_CELL, EMPTY_CELL, EMPTY_CELL
     },
     .player = PLAYER_X,
-    .state = TIE_STATE,
+    .state = IN_PLAY_STATE,
   };
 
   // https://wiki.libsdl.org/SDL2/SDL_Event
