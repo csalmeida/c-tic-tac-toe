@@ -6,6 +6,8 @@ It was written with the purpose of learning more about how to create application
 
 Additionaly, the project could be used to understand how to compile the program for different targets, such as Windows, MacOS and Linux.
 
+![Tic Tac Toe Game](tic_tac_toe.png)
+
 ## Setup
 
 To compile the program use: 
