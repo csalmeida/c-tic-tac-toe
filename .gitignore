@@ -3,7 +3,8 @@
 
 # Binaries:
 bin/*.*
-bin/*
+bin/mac-arm64/*
+bin/win64/*
 
 # Keep SDL binary for macOS:
 !bin/mac-arm64/sdl2-config
