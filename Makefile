@@ -18,7 +18,7 @@ INCLUDE_PATHS := include
 LIBRARY_PATHS = lib
 
 # Specify the libraries being used:
-LIBRARIES   := -lSDL2 -lSDL2_image -lSDL2_gfx # Don't forget that -l is the option
+LIBRARIES   := -lSDL2 -lSDL2_image # Don't forget that -l is the option
 LINKED_LIRARIES := include
 EXECUTABLE  := $(FILE_NAME)
 # SOURCES := $(shell find $(SRC) -name "*.c") # Finds files to compile.
