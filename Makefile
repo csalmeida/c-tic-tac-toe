@@ -36,10 +36,10 @@ $(BIN)/$(EXECUTABLE): $(SRC)/$(FILE_NAME).c
 	$(CC) $(C_FLAGS) $^ -o $@ -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
 
 mac-arm64: $(SRC)/$(FILE_NAME).c
-	$(CC) $(C_FLAGS) $^ -target arm64-apple-macos11 -o $@_mac_arm64 -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
+	$(CC) $(C_FLAGS) $^ -target arm64-apple-macos11 -o $(BIN)/mac-arm64/$(EXECUTABLE)_mac_arm64 -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
 
-windows: $(SRC)/$(FILE_NAME).c
-	x86_64-w64-mingw32-gcc $(C_FLAGS) $^ -o $(BIN)/$(EXECUTABLE).exe -Iwindows_include -Lwindows_lib -lmingw32 -lSDL2 -lSDL2_image -lSDL2_gfx -lSDL2main -mwindows
+win64: $(SRC)/$(FILE_NAME).c
+	x86_64-w64-mingw32-gcc $(C_FLAGS) $^ -o $(BIN)/win64/$(EXECUTABLE)_win64.exe -Iwindows_include -Lwindows_lib -lmingw32 -lSDL2 -lSDL2main -lSDL2_image -mwindows `sdl2-config --libs`
 
 # Removes main and main.* folders, keeps sdl2-config:
 clean:
