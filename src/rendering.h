@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "game.h"
 
   const SDL_Color GRID_COLOR = {
@@ -60,7 +61,7 @@ void render_grid(SDL_Renderer *renderer, const SDL_Color *color) {
 // Loads a Bitmap asset or throws an error;
 SDL_Surface *load_surface(char const *path)
 {
-    SDL_Surface *image_surface = SDL_LoadBMP(path);
+    SDL_Surface *image_surface = IMG_Load(path);
 
     if(!image_surface) {
       fprintf(stderr, "Could not load BMP image for path: %s\n", path);
