@@ -43,9 +43,12 @@ win64: $(SRC)/$(FILE_NAME).c
 
 # Removes main and main.* folders, keeps sdl2-config:
 clean:
-	- rm -f ./bin/$(EXECUTABLE)
-	- rm -f ./bin/$(EXECUTABLE)_
-	- rm -rf ./bin/$(EXECUTABLE).*
+	- rm -f ./bin/mac-arm64/$(EXECUTABLE)
+	- rm -f ./bin/mac-arm64/$(EXECUTABLE)_
+	- rm -rf ./bin/mac-arm64/$(EXECUTABLE).*
+	- rm -f ./bin/win64/$(EXECUTABLE)
+	- rm -f ./bin/win64/$(EXECUTABLE)_
+	- rm -rf ./bin/win64/$(EXECUTABLE).*
 
 # The final command should look like:
 # gcc `sdl2-config --cflags` -ggdb3 -O0 --std=c99 -Wall src/main.c -o bin/main -Iinclude -Llib -lSDL2 -lSDL2_image
