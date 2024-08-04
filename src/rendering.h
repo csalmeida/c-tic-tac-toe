@@ -1,8 +1,9 @@
 #ifndef RENDERING_H
 #define RENDERING_H
 
+#include <math.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h> // https://github.com/ferzkopp/SDL2_gfx
+#include <SDL2/SDL_image.h>
 #include "game.h"
 
   const SDL_Color GRID_COLOR = {
@@ -56,6 +57,20 @@ void render_grid(SDL_Renderer *renderer, const SDL_Color *color) {
   }
 }
 
+
+// Loads a Bitmap asset or throws an error;
+SDL_Surface *load_surface(char const *path)
+{
+    SDL_Surface *image_surface = IMG_Load(path);
+
+    if(!image_surface) {
+      fprintf(stderr, "Could not load BMP image for path: %s\n", path);
+      return 0;
+    }
+
+    return image_surface;
+}
+
 // Draws a cross inside a rectangle.
 // To do that it calculates a smaller rectangle inside the original rectange,
 // finds the middle of the rectangles,
@@ -69,26 +84,28 @@ void render_x(SDL_Renderer *renderer, int row, int column, const SDL_Color *colo
   const float center_x = CELL_WIDTH * 0.5 + column * CELL_WIDTH;
   const float center_y = CELL_HEIGHT * 0.5 + row * CELL_HEIGHT;
 
-  // Draws a line:
-  thickLineRGBA(renderer, 
-    center_x - half_box_size, center_y - half_box_size, 
-    center_x + half_box_size, center_y + half_box_size,
-    10,
-    color->r,
-    color->g,
-    color->b,
-    255
-  );
+  // Holds position of the texture|:
+  SDL_Rect destination;
 
-    thickLineRGBA(renderer, 
-    center_x + half_box_size, center_y - half_box_size,
-    center_x - half_box_size, center_y + half_box_size, 
-    10,
-    color->r,
-    color->g,
-    color->b,
-    255
-  );
+  // Adds image to texture:
+  SDL_Surface* image_surface = load_surface("src/assets/X.bmp");
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image_surface);
+  SDL_FreeSurface(image_surface); // We can free the surface after creating the texture.
+
+  if (!texture) {
+    fprintf(stderr, "Could not find texture for X graphic: %s\n", SDL_GetError());
+  }
+
+  // Get the dimensions of the texture, store's its information:
+  SDL_QueryTexture(texture, NULL, NULL, &destination.w, &destination.h);
+
+  destination.x = center_x - half_box_size;
+  destination.y = center_y - half_box_size;
+  destination.w = half_box_size * 2;
+  destination.h = half_box_size * 2;
+
+  // Draws the image with the coordinates given in the destination:
+  SDL_RenderCopy(renderer, texture, NULL, &destination);
 }
 
 void render_o(SDL_Renderer *renderer, int row, int column, const SDL_Color *color) {
@@ -100,23 +117,29 @@ void render_o(SDL_Renderer *renderer, int row, int column, const SDL_Color *colo
   const float center_x = CELL_WIDTH * 0.5 + column * CELL_WIDTH;
   const float center_y = CELL_HEIGHT * 0.5 + row * CELL_HEIGHT;
 
-  filledCircleRGBA(
-    renderer, 
-    center_x, center_y, half_box_size + 5,
-    color->r,
-    color->g,
-    color->b,
-    255 
-  );
+  // Holds position of the texture|:
+  SDL_Rect destination;
 
-  filledCircleRGBA(
-    renderer, 
-    center_x, center_y, half_box_size - 10,
-    0,
-    0,
-    0,
-    255 
-  );
+  // Adds image to texture:
+  SDL_Surface* image_surface = load_surface("src/assets/O.bmp");
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image_surface);
+  SDL_FreeSurface(image_surface); // We can free the surface after creating the texture.
+
+  if (!texture) {
+    fprintf(stderr, "Could not find texture for X graphic: %s\n", SDL_GetError());
+  }
+
+  // Get the dimensions of the texture, store's its information:
+  SDL_QueryTexture(texture, NULL, NULL, &destination.w, &destination.h);
+
+  // Sets the position and dimensions of the texture:
+  destination.x = center_x - half_box_size;
+  destination.y = center_y - half_box_size;
+  destination.w = half_box_size * 2;
+  destination.h = half_box_size * 2;
+
+  // Draws the image with the coordinates given in the destination:
+  SDL_RenderCopy(renderer, texture, NULL, &destination);
 }
 
 // Renders player moves into the board by reading the current state:

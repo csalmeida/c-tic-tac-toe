@@ -8,6 +8,11 @@ Additionaly, the project could be used to understand how to compile the program 
 
 ![Tic Tac Toe Game](tic_tac_toe.png)
 
+## Requirements
+
+This project was developed with macOS but it can probably run on Linux as well with a few adjustments.
+It requires `gcc` (it's aliased in macOS to `clang`) and `x86_64-w64-mingw32-gcc` to cross compile to Windows.
+
 ## Setup
 
 To compile the program use: 
