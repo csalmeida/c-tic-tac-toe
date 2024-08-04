@@ -5,7 +5,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "game.h"
-#include "assets.h"
 
   const SDL_Color GRID_COLOR = {
       .r = 255,
@@ -58,6 +57,20 @@ void render_grid(SDL_Renderer *renderer, const SDL_Color *color) {
   }
 }
 
+
+// Loads a Bitmap asset or throws an error;
+SDL_Surface *load_surface(char const *path)
+{
+    SDL_Surface *image_surface = IMG_Load(path);
+
+    if(!image_surface) {
+      fprintf(stderr, "Could not load BMP image for path: %s\n", path);
+      return 0;
+    }
+
+    return image_surface;
+}
+
 // Draws a cross inside a rectangle.
 // To do that it calculates a smaller rectangle inside the original rectange,
 // finds the middle of the rectangles,
@@ -75,7 +88,7 @@ void render_x(SDL_Renderer *renderer, int row, int column, const SDL_Color *colo
   SDL_Rect destination;
 
   // Adds image to texture:
-  SDL_Surface* image_surface = load_surface_from_memory(embedded_images[0].data, embedded_images[0].data_len);
+  SDL_Surface* image_surface = load_surface("src/assets/X.bmp");
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image_surface);
   SDL_FreeSurface(image_surface); // We can free the surface after creating the texture.
 
@@ -108,7 +121,7 @@ void render_o(SDL_Renderer *renderer, int row, int column, const SDL_Color *colo
   SDL_Rect destination;
 
   // Adds image to texture:
-  SDL_Surface* image_surface = load_surface_from_memory(embedded_images[1].data, embedded_images[1].data_len);
+  SDL_Surface* image_surface = load_surface("src/assets/O.bmp");
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image_surface);
   SDL_FreeSurface(image_surface); // We can free the surface after creating the texture.
 
