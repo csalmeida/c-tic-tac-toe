@@ -21,27 +21,43 @@ LIBRARY_PATHS = lib
 LIBRARIES   := -lSDL2 -lSDL2_image # Don't forget that -l is the option
 LINKED_LIRARIES := include
 EXECUTABLE  := $(FILE_NAME)
+EMBED_IMAGES := ./embed_images.sh
 # SOURCES := $(shell find $(SRC) -name "*.c") # Finds files to compile.
 
 .PHONY: clean all
 
-# Attempt to execute the program:
-all: $(BIN)/$(EXECUTABLE)
+# Build for all targets:
+.PHONY: all
+all: clean assets mac-arm64 win64
 
 # Cleans the bin directory and runs the executable.
 run: clean all
 	./$(BIN)/$(EXECUTABLE)
 
+# Formats source code:
+# FIXME: Not in use because it formats game grid array to a more unreadable format.
+# Needs a rules file.
+.PHONY: format
+format:
+	clang-format -i src/**/*.c src/**/*.h
+
+# Converts assets into byte array header files.
+# To be included in the final program.
+.PHONY: assets
+assets: 
+	$(EMBED_IMAGES)
+
 $(BIN)/$(EXECUTABLE): $(SRC)/$(FILE_NAME).c
 	$(CC) $(C_FLAGS) $^ -o $@ -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
 
-mac-arm64: $(SRC)/$(FILE_NAME).c
+mac-arm64: $(SRC)/$(FILE_NAME).c 
 	$(CC) $(C_FLAGS) $^ -target arm64-apple-macos11 -o $(BIN)/mac-arm64/$(EXECUTABLE)_mac_arm64 -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) $(LIBRARIES)
 
 win64: $(SRC)/$(FILE_NAME).c
 	x86_64-w64-mingw32-gcc $(C_FLAGS) $^ -o $(BIN)/win64/$(EXECUTABLE)_win64.exe -Iwindows_include -Lwindows_lib -lmingw32 -lSDL2 -lSDL2main -lSDL2_image -mwindows `sdl2-config --libs`
 
-# Removes main and main.* folders, keeps sdl2-config:
+# Removes main and main.* folders, keeps sdl2-config.
+# It also removes embedded asset files.
 clean:
 	- rm -f ./bin/mac-arm64/$(EXECUTABLE)
 	- rm -f ./bin/mac-arm64/$(EXECUTABLE)_
@@ -49,6 +65,7 @@ clean:
 	- rm -f ./bin/win64/$(EXECUTABLE)
 	- rm -f ./bin/win64/$(EXECUTABLE)_
 	- rm -rf ./bin/win64/$(EXECUTABLE).*
+	- rm -rf ./src/assets/*.h
 
 # The final command should look like:
 # gcc `sdl2-config --cflags` -ggdb3 -O0 --std=c99 -Wall src/main.c -o bin/main -Iinclude -Llib -lSDL2 -lSDL2_image
