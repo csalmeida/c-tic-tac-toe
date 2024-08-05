@@ -56,6 +56,13 @@ mac-arm64: $(SRC)/$(FILE_NAME).c
 win64: $(SRC)/$(FILE_NAME).c
 	x86_64-w64-mingw32-gcc $(C_FLAGS) $^ -o $(BIN)/win64/$(EXECUTABLE)_win64.exe -Iwindows_include -Lwindows_lib -lmingw32 -lSDL2 -lSDL2main -lSDL2_image -mwindows `sdl2-config --libs`
 
+# WASM compatible compiler and flags:
+EMCC 		:= emcc
+EMCC_FLAGS := -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s ALLOW_MEMORY_GROWTH=1 -s DISABLE_EXCEPTION_CATCHING=0 -O0 --std=c99 -Wall
+# @FIXME: This command compiles the program but it doesn't work due to an issue with how SDL and emscripten main loop works:
+wasm: $(SRC)/$(FILE_NAME).c
+	$(EMCC) $^ $(EMCC_FLAGS) -I$(INCLUDE_PATHS) -L$(LIBRARY_PATHS) -o $(BIN)/wasm/$(EXECUTABLE).html
+
 # Removes main and main.* folders, keeps sdl2-config.
 # It also removes embedded asset files.
 clean:
